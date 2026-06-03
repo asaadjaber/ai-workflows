@@ -1,0 +1,309 @@
+{
+  "name": "Sales Intelligence Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "appWipcIdCST54RyG",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblVVwFJsjHfr2opk",
+          "mode": "id"
+        },
+        "triggerField": "Created Time",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f40e5f42-83e6-40f6-b11c-b211a4721b0b",
+      "name": "Airtable Trigger1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "5MK1fR5Eq5m3yBkF",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Analyze this sales call transcript.\n\nReturn JSON with:\n\n{\n  \"summary\": \"\",\n  \"pain_points\": [],\n  \"next_steps\": [],\n  \"deal_risk\": \"\"\n}\n\nTranscript:\n\n {{ $json.fields['Transcript'] }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "87a0195c-1d27-430c-8951-d5679ad4f7e2",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3XRe0GfM9N0yJqwx",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appWipcIdCST54RyG",
+          "mode": "list",
+          "cachedResultName": "Sales Intelligence",
+          "cachedResultUrl": "https://airtable.com/appWipcIdCST54RyG"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblVVwFJsjHfr2opk",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appWipcIdCST54RyG/tblVVwFJsjHfr2opk"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Airtable Trigger1').item.json.id }}",
+            "Summary": "={{ $json.summary }}",
+            "Painpoints": "={{ $json.pain_points }}",
+            "Next steps": "={{ $json.next_steps }}",
+            "Deal risk": "={{ $json.deal_risk }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Call Name",
+              "displayName": "Call Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Painpoints",
+              "displayName": "Painpoints",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Next steps",
+              "displayName": "Next steps",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Deal risk",
+              "displayName": "Deal risk",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created Time",
+              "displayName": "Created Time",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        0
+      ],
+      "id": "a07323bf-f90b-4b9f-add9-4d93b9cce517",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "5MK1fR5Eq5m3yBkF",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst rawJson = $json.output[0].content[0].text;\n\nconst parsed = JSON.parse(rawJson);\n\nreturn [\n  {\n    json: {\n      summary: parsed.summary,\n      pain_points: parsed.pain_points.join('\\n• '),\n      next_steps: parsed.next_steps.join('\\n• '),\n      deal_risk: parsed.deal_risk\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        0
+      ],
+      "id": "91acd8ff-6c55-4bfd-a3cb-e6102a7cdd6f",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Airtable Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update record": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e17bbcb8-08cd-4f95-ba34-95df424f186c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f9ec1cd46c208a141003fa24b4d256b3e3bc786d46873cbf53847aabc04e04fa"
+  },
+  "nodeGroups": [],
+  "id": "v9pbRb7NknH2jhRP",
+  "tags": []
+}
