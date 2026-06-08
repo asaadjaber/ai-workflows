@@ -23,7 +23,9 @@ Set up a Python virtual environment
 
 `source .venv/bin/activate`
 
-Fire up the FastAPI server  uvicorn main_api:app --reload --port 8000
+Fire up the FastAPI server  
+
+`uvicorn main_api:app --reload --port 8000`
 
 Expose local port via grok
 
