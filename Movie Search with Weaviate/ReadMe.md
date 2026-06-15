@@ -6,6 +6,8 @@ This mini-project demonstrates how to ingest data into a Weaviate cloud database
 
 The system utilizes Weaviate Cloud to store movie vectors and handle semantic proximity queries. To generate natural language output without cloud LLM costs, a secure ngrok tunnel routes contextual payloads from Weaviate directly to a local Ollama server running `llama3`.
 
+For the RAG component, the mini-project first runs a check on the user prompt to determine if it is malicious or not using a guardrail created with Ollama which prompts the LLM to determine whether or not the user prompt is malicious and proceeds to generate a tweet if the prompt is not malicious followed by calculating a safety score to determine if the LLM hallucinated the tweet or the result is indeed accurate. 
+
 ## Setup
 
 1. Clone the repository locally. 
@@ -65,6 +67,8 @@ To generate a Tweet using Ollama and a movie from the Movie collection in Weavia
 python retrieval_augmented_generation.py
 ```
 
+10. To test the `retrieval_augmented_generation.py` script using the malicious prompt, replace `user_prompt` with `user_prompt_malicious` when calling the `get_scifi_movie` function.
+
 ## Built with: 
 - Python
 - Ollama (llama3)
@@ -89,3 +93,16 @@ python retrieval_augmented_generation.py
 - Running the query to generate a Tweet using Ollama and the Movie collection in Weaviate returns: 
 
   "Just watched #TheMatrix 🤖🔥 and I'm blown away by the mind-blowing action and thought-provoking themes! Whoa, Neo's awakening was EPIC 🚀 and I'm still reeling from the revelations about the simulated reality 😲 What's real, what's not? 🤯 Mind. Blown."
+
+  ============================================================
+📊 Initiating Native Faithfulness Audit Loop...
+📋 Step A: Extracting explicit factual statements from generation...
+🔎 Step B: Auditing 5 statement(s) against Weaviate Context ledger...
+  ✅ [VALID]: The user watched The Matrix.
+  ✅ [VALID]: The user is still reeling from the truth about the movie.
+  ✅ [VALID]: The world isn't what it seems, according to the movie.
+  ✅ [VALID]: Neo's journey in the movie is a wild ride.
+  ✅ [VALID]: The user had their mind blown by something in the movie.
+============================================================
+🛡️ [Final Safety Score]: 100.0% Factual Accuracy
+✅ Generation Approved: Factual accuracy verified against data cluster.
