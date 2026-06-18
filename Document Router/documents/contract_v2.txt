@@ -1,0 +1,5 @@
+MUTUAL NON-DISCLOSURE AGREEMENT — SECTION 4: PROPRIETARY INFORMATION RESTRICTIONS
+
+Except as otherwise expressly provided in this Agreement, the Receiving Party agrees to hold all Confidential Information in strict confidence and shall not disclose, disseminate, or cause to be disclosed any portion of the Disclosing Party's proprietary trade secrets, software source codes, algorithmic methodologies, or unreleased product feature designs to any third-tier corporate entity or un-cleared contractor personnel without obtaining prior written authorization from an executive officer of the Disclosing Party. 
+
+The Receiving Party shall exercise the same degree of structural caution and protective oversight to prevent unauthorized leakage or disclosure of said Confidential Information as it utilizes to protect its own internal intellectual properties of a highly sensitive legal nature, but in no event less than a reasonable standard of professional care under governing international regulatory frameworks.
