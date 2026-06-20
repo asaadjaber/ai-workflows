@@ -1,6 +1,6 @@
 # Local Codebase Intelligence Agent
 
-This Retrieval-Augmented Generation (RAG) pipeline retrieves Swift and Python code files from a specified code base, chunks the files using recursive chunking, creates vector embeddings in ChromaDB using nomic-embed-text and generates an answer based on a query about the codebase's architectuer using Ollama (llama 3) completely offline.
+This Retrieval-Augmented Generation (RAG) pipeline retrieves Swift and Python code files from a specified code base, chunks the files using recursive chunking, creates vector embeddings in ChromaDB using nomic-embed-text and generates an answer based on a query about the codebase's architectuer using Ollama (llama 3) completely offline. It also persists memory of queries within the same session to ensure the agent answers question based on prior chat context.
 
 ## Built With: 
 - Python 3
@@ -30,10 +30,10 @@ This Retrieval-Augmented Generation (RAG) pipeline retrieves Swift and Python co
    pip install langchain langchain-community langchain-chroma requests
    ```
 
-5. Run the files ensuring the `target_dir` property in `ingest.py` points to your local code repository:
+5. Run the files, passing the absolute path to your local codebase, `--path`, and vector database path, `--db`, arguments to `python ingest.py` and `python query_agent.py` respectively :
    ```bash
-   python ingest.py
-   python query_agent.py
+   python ingest.py --path "path/to/local/codebase"
+   python query_agent.py --db "./name-of-vector-database"
    ```
 
 ## Sample Output: 
